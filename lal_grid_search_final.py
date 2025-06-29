@@ -41,7 +41,7 @@ def sample_parameters(duration):
     mf_range = np.array([0.001, 0.005, 0.01, 0.03, 0.05, 0.08, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.9, 1.0, 1.2, 1.4, 1.6, 1.7, 2.0])
     mf1_range = np.array([0.001, 0.005, 0.01, 0.03, 0.05, 0.08, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.9, 1.0])
     mf2_range = np.array([0.0001, 0.0002, 0.0005, 0.0008, 0.001, 0.002, 0.005, 0.008, 0.01, 0.03, 0.05, 0.07, 0.1])
-    T_coh_range = np.array([6, 10, 15, 20, 30, 40, 60])
+    T_coh_range = np.array([10, 15, 20, 30, 40, 60])
     
     # 随机采样基础参数
     mf = np.random.choice(mf_range)
@@ -555,7 +555,7 @@ if __name__ == "__main__":
         # 检查已完成的运行次数
         last_completed = get_last_completed_run("LAL_example_data", label)
         start_run = last_completed + 1
-        total_runs = 2000
+        total_runs = 6000
         
         if last_completed > 0:
             print(f"Resuming from run {start_run} (found {last_completed} completed runs)")
