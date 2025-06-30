@@ -44,4 +44,5 @@ LAL_example_data/LALSemiCoherentF0F1F2_corrected0/*.dat
 
 
 LAL_example_data/LALSemiCoherentF0F1F2_search/**/*.sh
-LAL_example_data/LALSemiCoherentF0F1F2_search/**/*.dat
+LAL_example_data/LALSemiCoherentF0F1F2_search/**/*.datcombined_mismatch_data.csv
+combined_mismatch_data.csv
