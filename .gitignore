@@ -11,6 +11,8 @@ lalpulsar_Makefakedata_v5-help
 data/*.csv
 !data/x_data.csv
 !data/y_data.csv
+!data/x_data2.csv
+!data/y_data2.csv
 
 
 best_flow.pt
