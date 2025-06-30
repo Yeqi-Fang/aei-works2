@@ -2,6 +2,7 @@ import json
 import pandas as pd
 import os
 import glob
+from pathlib import Path
 
 
 def process_json_files_to_csv():
@@ -97,7 +98,7 @@ def process_json_files_to_csv():
         print(combined_df.info())
 
         # 保存为CSV
-        output_filename = 'data/combined_mismatch_data_all.csv'
+        output_filename = 'combined_mismatch_data.csv'
         combined_df.to_csv(output_filename, index=False)
         print(f"\nData saved to: {output_filename}")
 
@@ -133,6 +134,12 @@ def analyze_data(df):
     print(f"Number of unique parameter combinations: {len(unique_params)}")
     print(unique_params)
 
+
+    x_data = df[['mf', 'mf1', 'mf2', 'gamma1', 'gamma2', 'T_coh']]
+    y_data = df['mismatch']
+    
+    x_data.to_csv('data/x_data2.csv', index=False)
+    y_data.to_csv('data/y_data2.csv', index=False)
 
 # 主函数
 if __name__ == "__main__":
