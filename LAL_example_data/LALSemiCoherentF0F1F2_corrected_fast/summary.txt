@@ -1,0 +1,15 @@
+LAL Semi-Coherent Search Summary
+================================
+Number of searches: 100
+Successful searches: 100
+Perfect 2F: 78546712.000000
+Mean mismatch: 0.222007401761510
+
+Search parameters:
+F0_inj: 151.5
+F1_inj: -1e-10
+F2_inj: -1e-20
+mf: 0.35
+mf1: 0.5
+mf2: 0.01
+depth: 0.02
