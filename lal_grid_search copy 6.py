@@ -2,13 +2,12 @@ import os
 import subprocess
 import numpy as np
 import matplotlib.pyplot as plt
-import pandas as pd
 import concurrent.futures
 from rich.progress import Progress, TimeElapsedColumn, TimeRemainingColumn
 
 
 # Create output directory
-N = 500
+N = 100
 print_output = False  # Set to False to suppress output
 label = "LALSemiCoherentF0F1F2_corrected_fast"
 outdir = os.path.join("LAL_example_data", label)
@@ -35,7 +34,7 @@ psi_inj = 0.0
 phi0_inj = 0.0
 
 # Semi-coherent search parameters
-tStack = 20 * 86400  # 15 day coherent segments
+tStack = 15 * 86400  # 15 day coherent segments
 nStacks = int(duration / tStack)  # Number of segments
 
 # Step 1: Generate SFT data
@@ -87,19 +86,19 @@ if result.returncode != 0:
 # print(f"Created segment file with {nStacks} segments")
 
 # Step 3: Set up grid search parameters
-mf = 0.01
-mf1 = 0.001
-mf2 = 0.08
+mf = 0.35
+mf1 = 0.5
+mf2 = 0.01
 dF0 = np.sqrt(12 * mf) / (np.pi * tStack)
 dF1 = np.sqrt(180 * mf1) / (np.pi * tStack**2)
 df2 = np.sqrt(25200 * mf2) / (np.pi * tStack**3)
 
 # Search bands
-N1 = 10
-N2 = 5
-N3 = 5
-gamma1 = 11
-gamma2 = 91
+N1 = 2
+N2 = 3
+N3 = 3
+gamma1 = 9
+gamma2 = 69
 
 
 DeltaF0 = N1 * dF0
@@ -109,7 +108,6 @@ DeltaF2 = N3 * df2
 F0_randoms = np.random.uniform(- dF0 / 2.0, dF0 / 2.0, size=N)
 F1_randoms = np.random.uniform(- dF1 / 2.0, dF1 / 2.0, size=N)
 F2_randoms = np.random.uniform(- df2 / 2.0, df2 / 2.0, size=N)
-
 
 
 shared_cmd = [
@@ -131,22 +129,18 @@ shared_cmd = [
     # "--peakThrF=2.6",
     # "--computeBSGL",
     # "--oLGX=0.5,0.5",
-    # "--BSGLlogcorr=0",  # Disable BSG log correction    
+    # "--BSGLlogcorr=0",  # Disable BSG log correction
     # "--Fstar0=24",
 ]
 
+
 def single_run(i):
 
-
     F0_min = F0_inj - DeltaF0 / 2.0 + F0_randoms[i]
-    F0_max = F0_inj + DeltaF0 / 2.0 + F0_randoms[i]
     F1_min = F1_inj - DeltaF1 / 2.0 + F1_randoms[i]
-    F1_max = F1_inj + DeltaF1 / 2.0 + F1_randoms[i]
     F2_min = F2_inj - DeltaF2 / 2.0 + F2_randoms[i]
-    F2_max = F2_inj + DeltaF2 / 2.0 + F2_randoms[i]
 
     output_file = os.path.join(outdir, f"dats/semicoh_results_{i}.dat")
-    
 
     # Build command with proper formatting
     hierarchsearch_cmd = [
@@ -182,6 +176,7 @@ def single_run(i):
         print(f"stdout: {result.stdout}")
         raise RuntimeError("Failed to run semi-coherent search")
 
+
 with Progress(
     "[progress.description]{task.description}",
     "[progress.percentage]{task.percentage:>3.0f}%",
@@ -192,7 +187,7 @@ with Progress(
     "•",
     TimeRemainingColumn(),
 ) as progress:
-    
+
     task = progress.add_task("Processing runs", total=N)
     with concurrent.futures.ThreadPoolExecutor() as executor:
         futures = [executor.submit(single_run, i) for i in range(N)]
@@ -241,7 +236,7 @@ for i in range(N):
             F1_vals = data[:, 1]
             F2_vals = data[:, 2]
             twoF_vals = data[:, 3]
-            
+
             # Find maximum
             max_idx = np.argmax(twoF_vals)
             max_twoF = twoF_vals[max_idx]
@@ -273,11 +268,10 @@ perfect_search_cmd = [
     "--f2dotBand=0",
     f"--df2dot={df2:.15e}",
     f"--fnameout={perfect_output_file}",
-    f"--gammaRefine=8",
-    f"--gamma2Refine=20",
-    
-] + shared_cmd 
+    f"--gammaRefine={gamma1:.15g}",
+    f"--gamma2Refine={gamma2:.15g}",
 
+] + shared_cmd
 
 
 # 运行命令并捕获输出
@@ -316,12 +310,12 @@ if data:
     F1_vals = data[:, 1]
     F2_vals = data[:, 2]
     twoF_vals = data[:, 3]
-    
+
     # Find maximum
     max_idx = np.argmax(twoF_vals)
     perfect_2F = twoF_vals[max_idx]
-    
-    
+
+
 mismatches = []
 for i in range(N):
     max_twoF = max_twoFs[i]
@@ -352,7 +346,8 @@ ax.tick_params(axis="both", which="major", labelsize=14, length=6)
 ax.grid(axis="y", linewidth=0.6, alpha=0.35)
 
 fig.tight_layout()
-fig.savefig(f"images/mismatch_distribution_lal-{mf}-{mf1}-{mf2}-{N}-{depth}.pdf")
+fig.savefig(
+    f"images/mismatch_distribution_lal-{mf}-{mf1}-{mf2}-{N}-{depth}.pdf")
 # plt.show()
 
 # rumtime
