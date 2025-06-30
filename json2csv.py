@@ -98,7 +98,7 @@ def process_json_files_to_csv():
         print(combined_df.info())
 
         # 保存为CSV
-        output_filename = 'combined_mismatch_data.csv'
+        output_filename = 'data/combined_mismatch_data.csv'
         combined_df.to_csv(output_filename, index=False)
         print(f"\nData saved to: {output_filename}")
 
