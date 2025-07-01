@@ -3,7 +3,7 @@ import pandas as pd
 import os
 import glob
 from pathlib import Path
-
+import numpy as np
 
 def process_json_files_to_csv():
     """
@@ -134,12 +134,31 @@ def analyze_data(df):
     print(f"Number of unique parameter combinations: {len(unique_params)}")
     print(unique_params)
 
-
+    mf_range = np.array([0.001, 0.005, 0.01, 0.03, 0.05, 0.08, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.9, 1.0, 1.2, 1.4, 1.6, 1.7, 2.0])
+    mf1_range = np.array([0.001, 0.005, 0.01, 0.03, 0.05, 0.08, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.9, 1.0])
+    mf2_range = np.array([0.0001, 0.0002, 0.0005, 0.0008, 0.001, 0.002, 0.005, 0.008, 0.01, 0.03, 0.05, 0.07, 0.1])
+    T_coh_range = np.array([10, 15, 20, 30, 40, 60])
+    
+    #delete rows out of range
+    df_filtered = df[
+        (df['mf'].isin(mf_range)) &
+        (df['mf1'].isin(mf1_range)) &
+        (df['mf2'].isin(mf2_range)) &
+        (df['T_coh'].isin(T_coh_range))
+    ]
+    df_filtered = df_filtered.reset_index(drop=True)
+    df_filtered.to_csv('data/filtered_combined_mismatch_data.csv', index=False)
+    
     x_data = df[['mf', 'mf1', 'mf2', 'gamma1', 'gamma2', 'T_coh']]
     y_data = df['mismatch']
     
     x_data.to_csv('data/x_data2.csv', index=False)
     y_data.to_csv('data/y_data2.csv', index=False)
+    
+    x_data_filtered = df_filtered[['mf', 'mf1', 'mf2', 'gamma1', 'gamma2', 'T_coh']]
+    y_data_filtered = df_filtered['mismatch']
+    x_data_filtered.to_csv('data/x_data_filtered2.csv', index=False)
+    y_data_filtered.to_csv('data/y_data_filtered2.csv', index=False)
 
 # 主函数
 if __name__ == "__main__":
