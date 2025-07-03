@@ -46,3 +46,6 @@ LAL_example_data/LALSemiCoherentF0F1F2_corrected0/*.dat
 LAL_example_data/LALSemiCoherentF0F1F2_search/**/*.sh
 LAL_example_data/LALSemiCoherentF0F1F2_search/**/*.datcombined_mismatch_data.csv
 combined_mismatch_data.csv
+
+
+images/*-0.1-0.01-0.001-0.02.pdf
