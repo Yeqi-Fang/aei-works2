@@ -342,7 +342,7 @@ def one_config(config, sqrtSX, tstart, duration, tend, tref, IFO, depth, h0,
         
         task = progress.add_task("Processing runs", total=N)
         
-        with concurrent.futures.ThreadPoolExecutor() as executor:
+        with concurrent.futures.ThreadPoolExecutor(8) as executor:
             futures = [executor.submit(single_run_aggressive, i) for i in range(N)]
             
             for future in concurrent.futures.as_completed(futures):
