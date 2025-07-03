@@ -34,7 +34,7 @@ psi_inj = 0.0
 phi0_inj = 0.0
 
 # Semi-coherent search parameters
-tStack = 15 * 86400  # 15 day coherent segments
+tStack = 20 * 86400  # 15 day coherent segments
 nStacks = int(duration / tStack)  # Number of segments
 
 # Step 1: Generate SFT data
@@ -86,9 +86,9 @@ if result.returncode != 0:
 # print(f"Created segment file with {nStacks} segments")
 
 # Step 3: Set up grid search parameters
-mf = 0.35
-mf1 = 0.5
-mf2 = 0.01
+mf = 0.1
+mf1 = 0.1
+mf2 = 0.001
 dF0 = np.sqrt(12 * mf) / (np.pi * tStack)
 dF1 = np.sqrt(180 * mf1) / (np.pi * tStack**2)
 df2 = np.sqrt(25200 * mf2) / (np.pi * tStack**3)
@@ -347,7 +347,7 @@ ax.grid(axis="y", linewidth=0.6, alpha=0.35)
 
 fig.tight_layout()
 fig.savefig(
-    f"images/mismatch_distribution_lal-{mf}-{mf1}-{mf2}-{N}-{depth}.pdf")
+    f"images/mismatch_dist/mismatch_distribution_lal-{mf}-{mf1}-{mf2}-{N}-{depth}-{gamma1}-{gamma2}.pdf")
 # plt.show()
 
 # rumtime

@@ -74,7 +74,7 @@ if result.returncode != 0:
 
 # Step 2: Set up grid search parameters
 mf = 0.1
-mf1 = 0.01
+mf1 = 0.02
 mf2 = 0.001
 dF0 = np.sqrt(12 * mf) / (np.pi * tStack)
 dF1 = np.sqrt(180 * mf1) / (np.pi * tStack**2)
@@ -82,9 +82,9 @@ df2 = np.sqrt(25200 * mf2) / (np.pi * tStack**3)
 
 # Search bands
 N1 = 40
-N2 = 15
+N2 = 20
 N3 = 15
-gamma1 = 5
+gamma1 = 19
 gamma2 = 69
 
 DeltaF0 = N1 * dF0
@@ -115,9 +115,9 @@ shared_cmd = [
 ]
 
 # Single run (no loop)
-F0_min = F0_inj - DeltaF0 / 2.0 + F0_random
-F1_min = F1_inj - DeltaF1 / 2.0 + F1_random
-F2_min = F2_inj - DeltaF2 / 2.0 + F2_random
+F0_min = F0_inj - DeltaF0 / 2.0 
+F1_min = F1_inj - DeltaF1 / 2.0 
+F2_min = F2_inj - DeltaF2 / 2.0 
 
 output_file = os.path.join(outdir, "dats/semicoh_results.dat")
 

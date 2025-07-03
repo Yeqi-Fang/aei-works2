@@ -98,7 +98,7 @@ def process_json_files_to_csv():
         print(combined_df.info())
 
         # 保存为CSV
-        output_filename = 'data/combined_mismatch_data.csv'
+        output_filename = 'data/combined_mismatch_data3.csv'
         combined_df.to_csv(output_filename, index=False)
         print(f"\nData saved to: {output_filename}")
 
@@ -147,18 +147,18 @@ def analyze_data(df):
         (df['T_coh'].isin(T_coh_range))
     ]
     df_filtered = df_filtered.reset_index(drop=True)
-    df_filtered.to_csv('data/filtered_combined_mismatch_data.csv', index=False)
+    df_filtered.to_csv('data/filtered_combined_mismatch_data3.csv', index=False)
     
     x_data = df[['mf', 'mf1', 'mf2', 'gamma1', 'gamma2', 'T_coh']]
     y_data = df['mismatch']
     
-    x_data.to_csv('data/x_data2.csv', index=False)
-    y_data.to_csv('data/y_data2.csv', index=False)
+    x_data.to_csv('data/x_data3.csv', index=False)
+    y_data.to_csv('data/y_data3.csv', index=False)
     
     x_data_filtered = df_filtered[['mf', 'mf1', 'mf2', 'gamma1', 'gamma2', 'T_coh']]
     y_data_filtered = df_filtered['mismatch']
-    x_data_filtered.to_csv('data/x_data_filtered2.csv', index=False)
-    y_data_filtered.to_csv('data/y_data_filtered2.csv', index=False)
+    x_data_filtered.to_csv('data/x_data_filtered3.csv', index=False)
+    y_data_filtered.to_csv('data/y_data_filtered3.csv', index=False)
 
 # 主函数
 if __name__ == "__main__":
