@@ -198,7 +198,7 @@ def one_config(config, sqrtSX, tstart, duration, tend, tref, IFO, depth, h0,
     """运行一个配置的搜索"""
     
     # 参数设置
-    N = 500
+    N = 200
 
     mf = config['mf']
     mf1 = config['mf1']
