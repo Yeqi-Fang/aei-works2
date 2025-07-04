@@ -117,7 +117,7 @@ shared_cmd = [
     f"--refTime={tref:.15f}",
     f"--tStack={tStack:.15g}",
     f"--nStacksMax={nStacks}",
-    "--nCand1=10000000",
+    "--nCand1=50000000",
     "--printCand1",
     "--semiCohToplist",
     f"--minStartTime1={int(tstart)}",

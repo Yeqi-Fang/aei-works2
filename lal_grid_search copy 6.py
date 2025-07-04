@@ -7,7 +7,7 @@ from rich.progress import Progress, TimeElapsedColumn, TimeRemainingColumn
 
 
 # Create output directory
-N = 100
+N = 1000
 print_output = False  # Set to False to suppress output
 label = "LALSemiCoherentF0F1F2_corrected_fast"
 outdir = os.path.join("LAL_example_data", label)
@@ -87,18 +87,18 @@ if result.returncode != 0:
 
 # Step 3: Set up grid search parameters
 mf = 0.1
-mf1 = 0.1
-mf2 = 0.001
+mf1 = 0.3
+mf2 = 0.01
 dF0 = np.sqrt(12 * mf) / (np.pi * tStack)
-dF1 = np.sqrt(180 * mf1) / (np.pi * tStack**2)
-df2 = np.sqrt(25200 * mf2) / (np.pi * tStack**3)
+dF1 = np.sqrt(180 * mf1) / (np.pi * tStack**2) / 6
+df2 = np.sqrt(25200 * mf2) / (np.pi * tStack**3) / 69
 
 # Search bands
 N1 = 2
 N2 = 3
 N3 = 3
-gamma1 = 9
-gamma2 = 69
+gamma1 = 1
+gamma2 = 1
 
 
 DeltaF0 = N1 * dF0
