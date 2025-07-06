@@ -12,9 +12,12 @@ def process_json_files_to_csv():
 
     # 定义文件夹路径
     json_folders = [
-        'data/LALSemiCoherentF0F1F2_aggressive_memory_mac',
+        'LAL_example_data/LALSemiCoherentF0F1F2_aggressive_memory_mac',
         'LAL_example_data/LALSemiCoherentF0F1F2_aggressive_memory_codespace',
-        'LAL_example_data/LALSemiCoherentF0F1F2_aggressive_memory'
+        'LAL_example_data/LALSemiCoherentF0F1F2_aggressive_memory',
+        'LAL_example_data/LALSemiCoherentF0F1F2_random',
+        'LAL_example_data/LALSemiCoherentF0F1F2_random2',
+        'LAL_example_data/LALSemiCoherentF0F1F2_random3'
     ]
 
     # 存储所有处理后的DataFrame
