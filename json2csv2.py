@@ -12,9 +12,6 @@ def process_json_files_to_csv():
 
     # 定义文件夹路径
     json_folders = [
-        'LAL_example_data/LALSemiCoherentF0F1F2_aggressive_memory_mac',
-        'LAL_example_data/LALSemiCoherentF0F1F2_aggressive_memory_codespace',
-        'LAL_example_data/LALSemiCoherentF0F1F2_aggressive_memory',
         'LAL_example_data/LALSemiCoherentF0F1F2_random',
         'LAL_example_data/LALSemiCoherentF0F1F2_random2',
         'LAL_example_data/LALSemiCoherentF0F1F2_random3'
@@ -53,7 +50,10 @@ def process_json_files_to_csv():
                 T_coh = config.get('T_coh')
 
                 # 提取mismatch数据
-                mismatch_list = data.get('mismatch_list', [])
+                mismatch_list = data.get('mismatch_list')
+                f0_random = data.get('f0_random')
+                f1_random = data.get('f1_random')
+                f2_random = data.get('f2_random')
 
                 # 创建DataFrame：每行包含配置参数和一个mismatch值
                 rows = []
@@ -69,7 +69,10 @@ def process_json_files_to_csv():
                         'gamma1': gamma1,
                         'gamma2': gamma2,
                         'T_coh': T_coh,
-                        'mismatch': mismatch
+                        'mismatch': mismatch,
+                        'f0_random' : f0_random[i],
+                        'f1_random' : f1_random[i],
+                        'f2_random' : f2_random[i]
                     }
                     rows.append(row)
 
@@ -132,7 +135,7 @@ def analyze_data(df):
 
     # 按参数组合统计
     print("\nUnique parameter combinations:")
-    param_cols = ['mf', 'mf1', 'mf2', 'gamma1', 'gamma2', 'T_coh']
+    param_cols = ['mf', 'mf1', 'mf2', 'gamma1', 'gamma2', 'T_coh', 'f0_random', 'f1_random', 'f2_random']
     unique_params = df[param_cols].drop_duplicates()
     print(f"Number of unique parameter combinations: {len(unique_params)}")
     print(unique_params)
@@ -150,18 +153,18 @@ def analyze_data(df):
         (df['T_coh'].isin(T_coh_range))
     ]
     df_filtered = df_filtered.reset_index(drop=True)
-    df_filtered.to_csv('data/filtered_combined_mismatch_data4.csv', index=False)
+    df_filtered.to_csv('data/filtered_combined_mismatch_data_random.csv', index=False)
     
-    x_data = df[['mf', 'mf1', 'mf2', 'gamma1', 'gamma2', 'T_coh']]
+    x_data = df[['mf', 'mf1', 'mf2', 'gamma1', 'gamma2', 'T_coh', 'f0_random', 'f1_random', 'f2_random']]
     y_data = df['mismatch']
     
-    x_data.to_csv('data/x_data4.csv', index=False)
-    y_data.to_csv('data/y_data4.csv', index=False)
+    x_data.to_csv('data/x_data_random.csv', index=False)
+    y_data.to_csv('data/y_data_random.csv', index=False)
     
-    x_data_filtered = df_filtered[['mf', 'mf1', 'mf2', 'gamma1', 'gamma2', 'T_coh']]
+    x_data_filtered = df_filtered[['mf', 'mf1', 'mf2', 'gamma1', 'gamma2', 'T_coh', 'f0_random', 'f1_random', 'f2_random']]
     y_data_filtered = df_filtered['mismatch']
-    x_data_filtered.to_csv('data/x_data_filtered4.csv', index=False)
-    y_data_filtered.to_csv('data/y_data_filtered4.csv', index=False)
+    x_data_filtered.to_csv('data/x_data_filtered_random.csv', index=False)
+    y_data_filtered.to_csv('data/y_data_filtered_random.csv', index=False)
 
 # 主函数
 if __name__ == "__main__":

@@ -1,0 +1,28 @@
+# 执行程序设置
+executable = /usr/bin/python3
+arguments = lal_grid_search_final4_atlas.py $(ProcID)
+
+# 文件传输
+transfer_input_files = lal_grid_search_final4_atlas.py
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT
+
+# 输出文件配置
+output = out/job_$(ProcID).out
+error = err/job_$(ProcID).err
+log = analysis.log
+
+# 资源需求
+request_cpus = 32
+request_memory = 32GB
+request_disk = 40GB
+
+# 环境设置
+environment = "OMP_NUM_THREADS=32"
+
+# 运行控制
+universe = vanilla
+getenv = True
+
+# 提交34个作业
+queue 34
